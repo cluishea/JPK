@@ -300,11 +300,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/C05229D55229D0C8/Game/JPK/JPK.csproj",
+      "projectUniqueName": "/mnt/C05229D55229D0C8/Game/JPK/JPK/JPK.csproj",
       "projectName": "JPK",
-      "projectPath": "/mnt/C05229D55229D0C8/Game/JPK/JPK.csproj",
+      "projectPath": "/mnt/C05229D55229D0C8/Game/JPK/JPK/JPK.csproj",
       "packagesPath": "/home/cluishea/.nuget/packages/",
-      "outputPath": "/mnt/C05229D55229D0C8/Game/JPK/obj/",
+      "outputPath": "/mnt/C05229D55229D0C8/Game/JPK/JPK/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/cluishea/.nuget/NuGet/NuGet.Config"

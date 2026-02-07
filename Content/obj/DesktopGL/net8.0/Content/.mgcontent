@@ -4,7 +4,7 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>/mnt/C05229D55229D0C8/Game/JPK/Content/gameSheet.png</File>
+    <File>/mnt/C05229D55229D0C8/Game/JPK/JPK/Content/gameSheet.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

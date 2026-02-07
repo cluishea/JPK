@@ -19,7 +19,7 @@ class Map
     Texture2D texture;
 
     List<List<int>> tileMap = new List<List<int>>();
-
+    List<int> textureDistribution = new List<int> {0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6};
     public Map(){
         texture = AssetManager.LoadTexture("gameSheet");
         
@@ -27,8 +27,10 @@ class Map
         {
             List<int> row = new List<int>();
             for (int j = 0; j<columns; ++j)
-            {
-                row.Add(random.Next(0,10));
+            {   
+                int temp = random.Next(0,textureDistribution.Count);
+                row.Add(textureDistribution[temp]);
+
             }
             tileMap.Add(row);
         }
@@ -41,8 +43,8 @@ class Map
             for (int j = 0; j<columns; ++j)
             {
                 spriteBatch.Draw(texture,
-                            new Rectangle(i*tileHeight, j* tileWidth,tileHeight,tileWidth),
-                            new Rectangle(0*tileHeight, tileMap[i][j]* tileWidth,tileHeight,tileWidth),
+                            new Rectangle(i*tileWidth, j* tileHeight,tileWidth,tileHeight),
+                            new Rectangle(tileMap[i][j]*tileWidth, 0* tileHeight,tileWidth,tileHeight),
                             Color.White
                             );
             }

@@ -10,7 +10,7 @@ static class AssetManager
             content = _content;
         }
 
-        public static Texture2D LoadTexture(string name)
+    public static Texture2D LoadTexture(string name)
         {
             return content.Load<Texture2D>(name);
         }

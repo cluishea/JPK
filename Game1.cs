@@ -9,7 +9,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private Map gameMap = new Map();
+    private Map gameMap;
 
     public Game1()
     {
@@ -32,6 +32,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         AssetManager.Initialize(Content);
+        gameMap = new Map();
 
     }
 
