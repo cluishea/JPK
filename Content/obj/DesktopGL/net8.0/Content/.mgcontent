@@ -4,9 +4,9 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>/mnt/C05229D55229D0C8/Game/JPK/JPK/Content/gameSheet.png</File>
+    <File>/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/../../../../PixelArt/gameSheet.png</File>
   </SourceFiles>
   <DestFiles>
-    <File xsi:nil="true" />
+    <File>gameSheet.png</File>
   </DestFiles>
 </SourceFileCollection>
