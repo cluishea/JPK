@@ -1,2 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/../../../../PixelArt/gameSheet.png","/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/bin/DesktopGL/gameSheet.xnb","TextureProcessor","Texture2DContent",2317,409685,0.2767258
+"/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/../../../../PixelArt/gameSheet.png","/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/bin/DesktopGL/gameSheet.xnb","TextureProcessor","Texture2DContent",3879,409685,0.3836437
+"/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/Font.spritefont","/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/bin/DesktopGL/Font.xnb","FontDescriptionProcessor","SpriteFontContent",2012,37913,0.2507056

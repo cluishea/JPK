@@ -102,3 +102,4 @@
 /home/cluishea/Desktop/MonoGame/JPK/JPK/obj/Debug/net8.0/JPK.pdb
 /home/cluishea/Desktop/MonoGame/JPK/JPK/obj/Debug/net8.0/JPK.genruntimeconfig.cache
 /home/cluishea/Desktop/MonoGame/JPK/JPK/obj/Debug/net8.0/ref/JPK.dll
+/home/cluishea/Desktop/MonoGame/JPK/JPK/bin/Debug/net8.0/Content/Font.xnb

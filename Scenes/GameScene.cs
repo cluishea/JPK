@@ -13,6 +13,7 @@ namespace MyGame.Scenes
     {
         bool isGameOver = false;
 
+        private GameManager gameManager;
         private Map map;
         private ProjectileManager projectileManager;
         private Player player;
@@ -23,10 +24,13 @@ namespace MyGame.Scenes
 
         internal override void Load(ContentManager content)
         {
-            map = new Map();
-            map.Load(content);
             projectileManager = new ProjectileManager();
             projectileManager.Load(content);
+            gameManager = new GameManager();
+            gameManager.Load(content);
+
+            map = new Map();
+            map.Load(content);
             player = new Player(map,projectileManager);
             player.Load(content);
         }
@@ -34,15 +38,18 @@ namespace MyGame.Scenes
         internal override void Update(GameTime gameTime)
         {
             player.Update(gameTime);
-            projectileManager.Update(gameTime);
             map.Update(gameTime);
+            projectileManager.Update(gameTime);
+            gameManager.Update(gameTime);    
         }
 
         internal override void Draw(SpriteBatch spriteBatch)
         {
+            
             map.Draw(spriteBatch);
-            player.Draw(spriteBatch);
             projectileManager.Draw(spriteBatch);
+            player.Draw(spriteBatch);
+            gameManager.Draw(spriteBatch);
         }
     }
 
