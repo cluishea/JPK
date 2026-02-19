@@ -1,3 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/../../../../PixelArt/gameSheet.png","/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/bin/DesktopGL/Content/gameSheet.xnb","TextureProcessor","Texture2DContent",3829,122965,0.2679627
-"/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/Font.spritefont","/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/bin/DesktopGL/Content/Font.xnb","FontDescriptionProcessor","SpriteFontContent",2013,37913,0.4079137
+"/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/../../../../PixelArt/gameSheet.png","/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/bin/DesktopGL/Content/gameSheet.xnb","TextureProcessor","Texture2DContent",4248,122965,0.2532127
+"/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/Font16.spritefont","/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/bin/DesktopGL/Content/Font16.xnb","FontDescriptionProcessor","SpriteFontContent",2013,21529,0.3704152
+"/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/Font32.spritefont","/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/bin/DesktopGL/Content/Font32.xnb","FontDescriptionProcessor","SpriteFontContent",2013,37913,0.0822615

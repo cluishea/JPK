@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SourceFile>/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/Font16.spritefont</SourceFile>
+  <SourceTime>2026-02-19T19:14:40.8953337+05:45</SourceTime>
+  <DestFile>/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/bin/DesktopGL/Content/Font16.xnb</DestFile>
+  <DestTime>2026-02-19T19:31:31.8021405+05:45</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2025-10-20T20:10:32+05:45</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2025-10-20T20:10:32+05:45</ProcessorTime>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

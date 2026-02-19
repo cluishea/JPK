@@ -5,10 +5,12 @@
   <Config />
   <SourceFiles>
     <File>/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/../../../../PixelArt/gameSheet.png</File>
-    <File>/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/Font.spritefont</File>
+    <File>/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/Font16.spritefont</File>
+    <File>/home/cluishea/Desktop/MonoGame/JPK/JPK/Content/Font32.spritefont</File>
   </SourceFiles>
   <DestFiles>
     <File>gameSheet.png</File>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

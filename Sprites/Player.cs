@@ -50,7 +50,7 @@ namespace MyGame.Sprites
         int animationFrameDelay;
         bool mustCompleteAnimation;
         bool animationComplete;
-        int FRAME_DELAY_IDLE = 30;
+        int FRAME_DELAY_IDLE = 60;
         int FRAME_DELAY_SHOOTING = 30;
 
         
