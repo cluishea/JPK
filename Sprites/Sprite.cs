@@ -10,16 +10,18 @@ using MyGame.Core;
 
 namespace MyGame.Sprites
 {
-    class Sprite : Components
+    internal abstract class Sprite : Components
     {
         
-        private Texture2D texture;
-        private Vector2 position;
-        private Vector2 velocity;
-        private Rectangle boundingRectangle;
-        private float speed;
-        private int sourceTextureRectangle;
-        
+        protected Texture2D texture;
+        protected Vector2 position;
+        protected Vector2 velocity;
+        protected Rectangle boundingRectangle;
+        protected Vector2 origin;
+        protected float speed;
+        protected int sourceTextureRectangle;
+        protected int height;
+        protected int width;
 
         public Vector2 Position
         {
@@ -41,6 +43,11 @@ namespace MyGame.Sprites
             {
                 return boundingRectangle;
             }
+        }
+
+        public Sprite()
+        {
+            
         }
 
         public Sprite(Vector2 _position)
