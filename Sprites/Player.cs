@@ -20,9 +20,6 @@ namespace MyGame.Sprites
         ProjectileManager projectileManager;
         Vector2 defaultStartPosition = new Vector2(8*32,8*32);
 
-        // Player lives
-        int livesLeft;
-        int MAX_LIVES = 10;
         int MAX_VELOCITY = 2;
 
         // Offsets while drawing
@@ -75,10 +72,6 @@ namespace MyGame.Sprites
             {
               new Rectangle(64,32,width,height)  
             };
-            
-            
-
-            livesLeft = 3;
 
             velocity = Vector2.Zero;
             
@@ -140,9 +133,6 @@ namespace MyGame.Sprites
                         animationComplete = false;
                     }
             }
-            
-
-
         }
 
         private void UpdateBoundingRectangle()
