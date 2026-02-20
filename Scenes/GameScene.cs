@@ -17,6 +17,7 @@ namespace MyGame.Scenes
         private Map map;
         private ProjectileManager projectileManager;
         private Player player;
+        private EnemyManager enemyManager;
         
         public GameScene(GameSceneManager gsm) : base(gsm)
         {
@@ -33,6 +34,9 @@ namespace MyGame.Scenes
             map.Load(content);
             player = new Player(map,projectileManager);
             player.Load(content);
+
+            enemyManager = new EnemyManager(player,map);
+            enemyManager.Load(content);
         }
 
         internal override void Update(GameTime gameTime)
@@ -41,6 +45,7 @@ namespace MyGame.Scenes
             map.Update(gameTime);
             projectileManager.Update(gameTime);
             gameManager.Update(gameTime);    
+            enemyManager.Update(gameTime);
         }
 
         internal override void Draw(SpriteBatch spriteBatch)
@@ -50,6 +55,7 @@ namespace MyGame.Scenes
             projectileManager.Draw(spriteBatch);
             player.Draw(spriteBatch);
             gameManager.Draw(spriteBatch);
+            enemyManager.Draw(spriteBatch);
         }
     }
 
