@@ -14,10 +14,12 @@ namespace MyGame.GameElements
         int heightOffset = 120;
         int widthOffset = 400;
 
-        Map map;
         Rectangle textureRectangle;
         public bool isOutOfBounds;
         int MAX_VELOCITY = 4;
+
+        public bool isAlive;
+
 
         public Projectile(Vector2 _position, Vector2 _startvelocity, Map _map, Texture2D _texture) : base(_position)
         {
@@ -28,13 +30,10 @@ namespace MyGame.GameElements
             width = 6;
             textureRectangle = new Rectangle(0,64,width,height);
             isOutOfBounds = false;
+            isAlive = true;
             UpdateBoundingRectangle();
         }
 
-        private void UpdateBoundingRectangle()
-        {
-            boundingRectangle = new Rectangle((int)position.X,(int)position.Y,height,width);
-        }
 
         internal override void Load(ContentManager content)
         {

@@ -12,6 +12,7 @@ namespace MyGame.Managers
         SpriteFont font32;
         SpriteFont font16;
         Texture2D texture;
+        public bool isGameOver;
 
         // Player lives
         int livesLeft;
@@ -37,6 +38,16 @@ namespace MyGame.Managers
             livesLeft = 3;
             numberOfCoins = 0;
         }
+
+        public void RemoveLife()
+        {
+            livesLeft--;
+        }
+
+        public void AddScore(int scoreToAdd)
+        {
+            score+=scoreToAdd;
+        }
         
         internal override void Load(ContentManager content)
         {
@@ -48,6 +59,10 @@ namespace MyGame.Managers
 
         internal override void Update(GameTime gameTime)
         {
+            if(livesLeft == 0)
+            {
+                isGameOver = true;
+            }
         }
         internal override void Draw(SpriteBatch spriteBatch)
         {

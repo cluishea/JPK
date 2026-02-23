@@ -4,9 +4,11 @@ Game scenes manager class
 Partial class so code can be split to many files
 */
 
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MyGame.Core;
 using MyGame.Scenes;
 
@@ -28,6 +30,12 @@ namespace MyGame.Managers
                 case GameConfig.Scenes.Game:
                     GameConfig.currentScene = GameConfig.Scenes.Game;
                     break;
+                case GameConfig.Scenes.Pause:
+                    GameConfig.currentScene = GameConfig.Scenes.Pause;
+                    break;
+                case GameConfig.Scenes.GameOver:
+                    GameConfig.currentScene = GameConfig.Scenes.GameOver;
+                    break;
             }
         }
 
@@ -42,6 +50,24 @@ namespace MyGame.Managers
 
         internal override void Update(GameTime gameTime)
         {
+
+            if (InputManager.keyboardState.IsKeyDown(Keys.Space) && GameConfig.currentScene==GameConfig.Scenes.Menu)
+            {
+                ChangeScene(GameConfig.Scenes.Game);
+            }
+
+            if (InputManager.IsKeyPressed(Keys.P) && GameConfig.currentScene==GameConfig.Scenes.Game)
+            {
+                ChangeScene(GameConfig.Scenes.Pause);
+            }
+            else if (InputManager.IsKeyPressed(Keys.P) && GameConfig.currentScene==GameConfig.Scenes.Pause)
+            {
+                ChangeScene(GameConfig.Scenes.Game);
+            }
+
+            
+
+
             switch (GameConfig.currentScene)
             {
                 case GameConfig.Scenes.Menu:

@@ -24,6 +24,18 @@ namespace MyGame.Managers{
 
         }
 
+        public static bool IsKeyPressed(Keys k)
+        {
+            if (keyboardState.IsKeyDown(k) && !previousKeyboardState.IsKeyDown(k))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 
 }

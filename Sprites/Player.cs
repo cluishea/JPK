@@ -10,13 +10,13 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using MyGame.Managers;
+using MyGame.Utilities;
 using MyGame.World;
 
 namespace MyGame.Sprites
 {
     class Player : Sprite
     {
-        Map map;
         ProjectileManager projectileManager;
         Vector2 defaultStartPosition = new Vector2(8*32,8*32);
 
@@ -37,23 +37,27 @@ namespace MyGame.Sprites
         bool isIdle = true;
 
         // Animations
-        enum Animations {Idle, Shooting};
-
         List<Rectangle> IDLE_ANIMATION_FRAMES;
         List <Rectangle> SHOOTING_ANIMATION_FRAMES;
 
-        Animations currentAnimation;
-        List<Rectangle> currentAnimationFrames;
-        int currentAnimationFrame;
-        int animationFrameTimer;
-        // The animation works like Stardew Valley (I think) where animation needs to finish before playing another one
-        int animationFrameDelay;
-        bool mustCompleteAnimation;
-        bool animationComplete;
-        int FRAME_DELAY_IDLE = 60;
-        int FRAME_DELAY_SHOOTING = 30;
+        Animation currentAnimation;
+        Animation idleAnimation;
+        Animation shootingAnimation;
 
-        
+        public void Die()
+        {
+            position = defaultStartPosition;
+
+            velocity = Vector2.Zero;
+            
+            shootTimer = DEFAULT_SHOOT_TIMER;
+            timeSinceLastShoot = 0;
+
+            currentAnimation = idleAnimation;
+
+            UpdateBoundingRectangle();
+        }
+
         private void Initialize()
         {
 
@@ -78,13 +82,12 @@ namespace MyGame.Sprites
             shootTimer = DEFAULT_SHOOT_TIMER;
             timeSinceLastShoot = 0;
 
-            currentAnimation = Animations.Idle;
-            currentAnimationFrame = 0;
-            animationFrameDelay = FRAME_DELAY_IDLE;
-            animationFrameTimer = 0;
-            currentAnimationFrames = IDLE_ANIMATION_FRAMES;
-            mustCompleteAnimation = false;
-            animationComplete = false;
+
+            idleAnimation = new Animation("Idle",IDLE_ANIMATION_FRAMES,60,false);
+            shootingAnimation = new Animation("Shooting",SHOOTING_ANIMATION_FRAMES, 30, true);
+
+            currentAnimation = idleAnimation;
+ 
 
             UpdateBoundingRectangle();
         }
@@ -92,53 +95,26 @@ namespace MyGame.Sprites
         private void UpdateAnimation()
         {   
 
-            animationFrameTimer++;
-            if (animationFrameTimer == animationFrameDelay)
-            {
-                animationFrameTimer = 0;
-                currentAnimationFrame++;
-                if (currentAnimationFrame == currentAnimationFrames.Count)
-                {
-                    animationComplete = true;
-                    currentAnimationFrame = 0;
-                }
-            }
-
+            currentAnimation.FramePass();
 
             // Updating what animation plays (Special animations other than run/idle)
 
             if (isShooting)
             {
-                currentAnimation = Animations.Shooting;
-                currentAnimationFrame = 0;
-                animationFrameDelay = FRAME_DELAY_SHOOTING;
-                animationFrameTimer = 0;
-                currentAnimationFrames = SHOOTING_ANIMATION_FRAMES;
-                mustCompleteAnimation = true;
-                animationComplete = false;
+                currentAnimation = shootingAnimation;
+                shootingAnimation.Restart();
             }
 
             // Updating the animation
 
-            if(animationComplete || !mustCompleteAnimation)
+            if(currentAnimation.animationComplete || !currentAnimation.mustCompleteAnimation)
             {
-                if (isIdle && currentAnimation!=Animations.Idle)
+                if (isIdle && currentAnimation.name!="Idle")
                     {
-                        currentAnimation = Animations.Idle;
-                        currentAnimationFrame = 0;
-                        animationFrameDelay = FRAME_DELAY_IDLE;
-                        animationFrameTimer = 0;
-                        currentAnimationFrames = IDLE_ANIMATION_FRAMES;
-                        mustCompleteAnimation = false;
-                        animationComplete = false;
+                        currentAnimation = idleAnimation;
+                        idleAnimation.Restart();
                     }
             }
-        }
-
-        private void UpdateBoundingRectangle()
-        {
-            boundingRectangle = new Rectangle((int)position.X,(int)position.Y,width,height);
-            origin = new Vector2(position.X+width/2,position.Y+height/2);
         }
 
         private void HandleShootingInput()
@@ -224,39 +200,6 @@ namespace MyGame.Sprites
             }
         }   
         
-        private bool CheckCollision(Vector2 newPosition)
-        {
-            // Check boundary condition
-            if (newPosition.X < 0 || newPosition.Y < 0 || newPosition.X+width > map.mapWidth || newPosition.Y+height > map.mapHeight)
-            {
-                return true;
-            }
-
-            // Check tilemap 
-            // Theres a O<1> way to do this
-            for (int i = 0; i < map.numRows; ++i)
-            {
-                for(int j = 0; j<map.numColumns; ++j)
-                {
-                    if (map.tileMap[i][j] == -1 && new Rectangle(j*map.tileWidth,i*map.tileHeight,map.tileWidth,map.tileHeight).Intersects(new Rectangle((int)newPosition.X,(int)newPosition.Y,width,height)))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-        private void MovePlayer()
-        {
-            Vector2 newPosition = new Vector2(position.X+velocity.X, position.Y+velocity.Y);
-
-            if (!CheckCollision(newPosition))
-            {
-                position = newPosition;
-            }
-
-        }
         
         public Player(Map _map, ProjectileManager _projectileManager){
             position = defaultStartPosition;
@@ -284,7 +227,7 @@ namespace MyGame.Sprites
             HandleMovementInput();
             HandleShootingInput();
 
-            MovePlayer();
+            Move();
 
             UpdateAnimation();
            
@@ -294,7 +237,7 @@ namespace MyGame.Sprites
         internal override void Draw(SpriteBatch spriteBatch)
         {  
             Rectangle drawingRectangle = new Rectangle(boundingRectangle.X+widthOffset,boundingRectangle.Y+heightOffset,width,height);
-            spriteBatch.Draw(texture,drawingRectangle,currentAnimationFrames[currentAnimationFrame],Color.White);
+            spriteBatch.Draw(texture,drawingRectangle,currentAnimation.animationFrames[currentAnimation.currentAnimationFrame],Color.White);
         }
     }
 }

@@ -10,12 +10,22 @@ namespace MyGame.Managers
 {
     class EnemyManager : Components
     {
+
+        ContentManager content;
         Player player;
         Map map;
-        List <Sprite> enemies = new List<Sprite>();
+        public List <Enemy> enemies = new List<Enemy>();
 
         int timeSinceLastSpawn;
         int lastSpawnCount;
+        int currentEnemiesCount;
+
+
+
+        public void RemoveAll()
+        {
+            enemies = new List<Enemy>();
+        }
 
         public EnemyManager(Player _player,Map _map)
         {
@@ -24,18 +34,35 @@ namespace MyGame.Managers
 
             timeSinceLastSpawn = 0;
             lastSpawnCount = 0;
+            currentEnemiesCount = 0;
+
+
         }
 
-        internal override void Load(ContentManager content)
+        internal override void Load(ContentManager _content)
         {
-            Slime slime = new Slime(new Vector2(0,0),player);
-            slime.Load(content);
-            enemies.Add(slime);
-
+            content = _content;
         }
 
         internal override void Update(GameTime gameTime)
         {
+
+            if (timeSinceLastSpawn%48000 == 0){
+                Slime slime = new Slime(new Vector2(50,50),player,map);
+                slime.Load(content);
+                enemies.Add(slime);
+            }
+
+            timeSinceLastSpawn++;
+
+            for (int i = enemies.Count-1; i>=0 ; --i)
+            {
+                if (!enemies[i].isAlive)
+                {
+                    enemies.RemoveAt(i);
+                }
+            }
+
             for (int i = 0; i < enemies.Count; i++)
             {
                 enemies[i].Update(gameTime);

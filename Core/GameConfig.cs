@@ -13,7 +13,7 @@ namespace MyGame.Core
         public static int screenHeight {get;set;} = 720;
 
 
-        public enum Scenes {Menu, Game}
+        public enum Scenes {Menu, Game, Pause, GameOver}
         public static Scenes currentScene {get;set;} = Scenes.Menu;
 
     }

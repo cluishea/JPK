@@ -1,12 +1,15 @@
+using System.Collections.Generic;
 using System.Net;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MyGame.Utilities;
+using MyGame.World;
 
 namespace MyGame.Sprites
 {
     
-    class Slime : Sprite
+    class Slime : Enemy
     {
         Player player;
         int MAX_VELOCITY = 4;
@@ -19,32 +22,53 @@ namespace MyGame.Sprites
         int drawOffsetWidth = 400;
         int drawOffsetHeight = 120;
 
+        int MAX_HEALTH = 1;
 
-        public Slime(Vector2 _startPosition,  Player _player)
+        Animation idleAnimation;
+        Animation jumpingAnimation;
+        Animation currentAnimation;
+
+
+        public Slime(Vector2 _startPosition,  Player _player,Map _map)
         {
             player = _player;
+            map = _map;
 
             position = _startPosition;
             width = 32;
             height = 32;
-            sourceTextureRectangle = new Rectangle(288,32,width,height);
 
             isJumping = false;
             currentActionTimer = 0;
             direction = Vector2.Zero;
             speed = 0;
 
-            UpdateBoundingRectangle();
-        }
+            health = 1;
+            isAlive = true;
 
-        private void UpdateBoundingRectangle()
-        {
-            boundingRectangle = new Rectangle((int)position.X,(int)position.Y,width,height);
+            pointsOnDefeat = 10;
+
+            List<Rectangle> IDLE_ANIMATION_FRAMES = new List<Rectangle>
+            {
+                new Rectangle(0,96,width,height),
+                new Rectangle(32,96,width,height)
+            };
+            List<Rectangle> JUMPING_ANIMATION_FRAMES = new List<Rectangle>
+            {
+                new Rectangle(64,96,width,height),
+            };
+
+            idleAnimation =new Animation("Idle",IDLE_ANIMATION_FRAMES,30,false);
+            jumpingAnimation = new Animation("Jumping",JUMPING_ANIMATION_FRAMES,30,true);
+
+            currentAnimation = idleAnimation;
+            UpdateBoundingRectangle();
         }
 
         void UpdateTimings()
         {
             currentActionTimer++;
+            currentAnimation.FramePass();
 
             if (isJumping)
             {
@@ -55,6 +79,9 @@ namespace MyGame.Sprites
                     speed = 0;
 
                     velocity = direction*speed;
+
+                    currentAnimation = idleAnimation;
+                    currentAnimation.Restart();
                 }
             }
             else
@@ -65,12 +92,15 @@ namespace MyGame.Sprites
                     currentActionTimer = 0;
                     speed = MAX_VELOCITY;
 
-                    direction = new Vector2(player.Position.X - position.X, player.Position.Y - position.Y);
+                    direction = new Vector2(player.Origin.X - position.X, player.Origin.Y - position.Y);
                     if (direction != Vector2.Zero)
                     {
                         direction.Normalize();
                     }
                     velocity = direction*speed;
+
+                    currentAnimation = jumpingAnimation;
+                    currentAnimation.Restart();
 
                 }
             }
@@ -85,9 +115,12 @@ namespace MyGame.Sprites
         {
             UpdateTimings();
 
+            if (health == 0 || health <0)
+            {
+                isAlive = false;
+            }
 
-            position.X += velocity.X;
-            position.Y += velocity.Y;
+            Move();
 
             UpdateBoundingRectangle();
         }
@@ -95,7 +128,14 @@ namespace MyGame.Sprites
         internal override void Draw(SpriteBatch spriteBatch)
         {
             Rectangle drawRectangle = new Rectangle(drawOffsetWidth+boundingRectangle.X,drawOffsetHeight+boundingRectangle.Y,width,height);
-            spriteBatch.Draw(texture,drawRectangle,sourceTextureRectangle,Color.White);
+            Rectangle textureRectangle = currentAnimation.animationFrames[currentAnimation.currentAnimationFrame];
+            if (isAlive){
+                spriteBatch.Draw(texture,drawRectangle,textureRectangle,Color.White);
+            }
+            else
+            {
+                spriteBatch.Draw(texture,drawRectangle,textureRectangle,Color.Red);
+            }
         }
     }
 

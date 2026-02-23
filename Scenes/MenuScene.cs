@@ -20,10 +20,7 @@ namespace MyGame.Scenes
 
         internal override void Update(GameTime gameTime)
         {
-            if (InputManager.keyboardState.IsKeyDown(Keys.Space))
-            {
-                gsm.ChangeScene(GameConfig.Scenes.Game);
-            }
+            
         }
 
         internal override void Draw(SpriteBatch spriteBatch)

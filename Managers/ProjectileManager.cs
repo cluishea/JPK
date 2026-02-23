@@ -14,12 +14,17 @@ namespace MyGame.Managers
     {
         
         Texture2D texture;
-        List<Projectile> projectiles = new List<Projectile>();
+        public List<Projectile> projectiles = new List<Projectile>();
 
         public void CreateProjectile(Vector2 _startPosition,Vector2 _velocity, Map _map)
         {
             Projectile _temp = new Projectile(_startPosition,_velocity,_map,texture);
             projectiles.Add(_temp);
+        }
+
+        public void RemoveAll()
+        {
+            projectiles = new List<Projectile>();
         }
 
 
@@ -33,7 +38,7 @@ namespace MyGame.Managers
 
             for (int i = projectiles.Count-1; i>=0 ; --i)
             {
-                if (projectiles[i].isOutOfBounds)
+                if (projectiles[i].isOutOfBounds || !projectiles[i].isAlive)
                 {
                     projectiles.RemoveAt(i);
                 }

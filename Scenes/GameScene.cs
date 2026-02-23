@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MyGame.Core;
+using MyGame.GameElements;
 using MyGame.Managers;
 using MyGame.Sprites;
 using MyGame.World;
@@ -18,6 +19,33 @@ namespace MyGame.Scenes
         private ProjectileManager projectileManager;
         private Player player;
         private EnemyManager enemyManager;
+
+        private void HandleKills()
+        {
+            foreach (Projectile projectile in projectileManager.projectiles)
+            {
+                foreach(Enemy enemy in enemyManager.enemies)
+                {
+                    if (projectile.BoundingRectangle.Intersects(enemy.BoundingRectangle))
+                    {
+                        projectile.isAlive = false;
+                        enemy.DropHealth(1);
+                        gameManager.AddScore(enemy.pointsOnDefeat);
+                    }
+                }
+            }
+
+            foreach (Enemy enemy in enemyManager.enemies)
+            {
+                if (enemy.BoundingRectangle.Intersects(player.BoundingRectangle))
+                {
+                    player.Die();
+                    gameManager.RemoveLife();
+                    projectileManager.RemoveAll();
+                    enemyManager.RemoveAll();
+                }
+            }
+        }
         
         public GameScene(GameSceneManager gsm) : base(gsm)
         {
@@ -46,6 +74,14 @@ namespace MyGame.Scenes
             projectileManager.Update(gameTime);
             gameManager.Update(gameTime);    
             enemyManager.Update(gameTime);
+
+            HandleKills();
+
+            if (gameManager.isGameOver)
+            {
+                gsm.ChangeScene(GameConfig.Scenes.GameOver);
+            }
+
         }
 
         internal override void Draw(SpriteBatch spriteBatch)
