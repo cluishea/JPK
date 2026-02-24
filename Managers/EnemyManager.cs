@@ -44,14 +44,17 @@ namespace MyGame.Managers
             content = _content;
         }
 
+        private void HandleEnemySpawns()
+        {
+            Slime slime = new Slime(new Vector2(200,200),player,map);
+            slime.Load(content);
+            enemies.Add(slime);
+        }
+
         internal override void Update(GameTime gameTime)
         {
 
-            if (timeSinceLastSpawn%48000 == 0){
-                Slime slime = new Slime(new Vector2(50,50),player,map);
-                slime.Load(content);
-                enemies.Add(slime);
-            }
+            HandleEnemySpawns();
 
             timeSinceLastSpawn++;
 

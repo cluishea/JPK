@@ -31,6 +31,7 @@ namespace MyGame.Scenes
                         projectile.isAlive = false;
                         enemy.DropHealth(1);
                         gameManager.AddScore(enemy.pointsOnDefeat);
+                        break;
                     }
                 }
             }
@@ -43,6 +44,7 @@ namespace MyGame.Scenes
                     gameManager.RemoveLife();
                     projectileManager.RemoveAll();
                     enemyManager.RemoveAll();
+                    break;
                 }
             }
         }
@@ -69,6 +71,7 @@ namespace MyGame.Scenes
 
         internal override void Update(GameTime gameTime)
         {
+
             player.Update(gameTime);
             map.Update(gameTime);
             projectileManager.Update(gameTime);

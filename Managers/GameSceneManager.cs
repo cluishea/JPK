@@ -16,7 +16,8 @@ namespace MyGame.Managers
 {
     internal partial class GameSceneManager : Components
     {
-
+        
+        ContentManager content;
         MenuScene menuScene;
         GameScene gameScene;
 
@@ -39,8 +40,10 @@ namespace MyGame.Managers
             }
         }
 
-        internal override void Load(ContentManager content)
+        internal override void Load(ContentManager _content)
         {
+            content = _content;
+
             gameScene = new GameScene(this);
             gameScene.Load(content);
 
@@ -65,7 +68,13 @@ namespace MyGame.Managers
                 ChangeScene(GameConfig.Scenes.Game);
             }
 
-            
+
+            if (InputManager.IsKeyPressed(Keys.Space) && GameConfig.currentScene==GameConfig.Scenes.GameOver)
+            {
+                ChangeScene(GameConfig.Scenes.Game);
+                gameScene = new GameScene(this);
+                gameScene.Load(content);
+            }            
 
 
             switch (GameConfig.currentScene)
@@ -88,6 +97,11 @@ namespace MyGame.Managers
                     break;
                 case GameConfig.Scenes.Game:
                     gameScene.Draw(spriteBatch);
+                    break;
+                case GameConfig.Scenes.Pause:
+                    gameScene.Draw(spriteBatch);
+                    break;
+                case GameConfig.Scenes.GameOver:
                     break;
             }
         }

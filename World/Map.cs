@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -33,6 +34,8 @@ namespace MyGame.World
         List<List<int>> textureMap = new List<List<int>>();
         int numTextures = 8;
 
+        public List <Rectangle> enemySpawnableTiles = new List<Rectangle>();
+
         private void CreateTileMap()
         {
             for(int i = 0; i < numRows; i++)
@@ -48,6 +51,7 @@ namespace MyGame.World
                         {
                             // Spawning points
                             thisRow.Add(1);
+                            enemySpawnableTiles.Add(new Rectangle(j*tileWidth,i*tileHeight,tileWidth,tileHeight));
                         }
                         else
                         {

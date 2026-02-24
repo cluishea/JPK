@@ -59,7 +59,7 @@ namespace MyGame.Managers
 
         internal override void Update(GameTime gameTime)
         {
-            if(livesLeft == 0)
+            if(livesLeft == 0 || livesLeft<0)
             {
                 isGameOver = true;
             }
