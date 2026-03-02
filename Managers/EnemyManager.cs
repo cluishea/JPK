@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MyGame.Core;
 using MyGame.Sprites;
+using MyGame.Utilities;
 using MyGame.World;
 
 namespace MyGame.Managers
@@ -46,9 +47,24 @@ namespace MyGame.Managers
 
         private void HandleEnemySpawns()
         {
-            Slime slime = new Slime(new Vector2(200,200),player,map);
-            slime.Load(content);
-            enemies.Add(slime);
+            if(timeSinceLastSpawn == 60)
+            {
+                timeSinceLastSpawn = 0;
+                int numSpawn = 1;
+                Rectangle spawnRectangle = map.enemySpawnableTiles[Randomizer.RandomInteger(map.enemySpawnableTiles.Count)];
+                int numberSpawned = 0;
+                do
+                {
+                    Slime slime = new Slime(Randomizer.RandomPoint(spawnRectangle),player,map);
+                    slime.Load(content);
+                    if (!slime.CheckCollision(slime.Position))
+                    {
+                        enemies.Add(slime);
+                        numberSpawned++;
+                    }
+                    
+                }while(numberSpawned < numSpawn);
+            }
         }
 
         internal override void Update(GameTime gameTime)

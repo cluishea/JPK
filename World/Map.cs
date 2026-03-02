@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.Xna.Framework;
@@ -13,7 +14,7 @@ namespace MyGame.World
     class Map : Components
     {
 
-        Texture2D mapTexture;
+        Texture2D texture;
         Rectangle borderTextureRectangle;
         Rectangle enemySpawnTextureRectangle;
         List<Rectangle> tilesTextureRectangle = new List<Rectangle>();
@@ -24,44 +25,47 @@ namespace MyGame.World
         
         public int tileHeight = 32;
         public int tileWidth = 32;
-        public int numRows = 16;
-        public int numColumns = 16;
+        public int numRows;
+        public int numColumns;
         public int mapHeight;
         public int mapWidth;
 
         public List<List<int>> tileMap = new List<List<int>>();
-        // 1 = Spawning point, -1 = Wall, 0 = Open space
+        // 2 = Spawning point, 1 = Cactus, 0 = Open space
         List<List<int>> textureMap = new List<List<int>>();
         int numTextures = 8;
 
         public List <Rectangle> enemySpawnableTiles = new List<Rectangle>();
+        public List <Rectangle> collisionTiles = new List<Rectangle>();
+
+        string filePath = "World/Map.txt";
 
         private void CreateTileMap()
         {
+
+            string[] linesTileMap = File.ReadAllLines(filePath);
+
+            numRows = linesTileMap.Length;
+            numColumns = linesTileMap[0].Split(',').Length;
+
             for(int i = 0; i < numRows; i++)
             {
+
+                string[] line = linesTileMap[i].Split(',');
+
                 List<int> thisRow = new List<int>();
                 List<int> thisRowTexture = new List<int>();
                 for(int j = 0;j < numColumns; j++)
                 {   
                     thisRowTexture.Add(Randomizer.RandomInteger(numTextures));
-                    if(i == 0 || j == 0 || i == numRows-1 || j == numColumns-1)
+                    thisRow.Add(int.Parse(line[j]));
+                    if (line[j] == "2")
                     {
-                        if(i == numRows/2-1 || i == numRows/2+1 || i == numRows/2 ||j == numColumns/2-1 || j == numColumns/2+1 || j == numColumns / 2)
-                        {
-                            // Spawning points
-                            thisRow.Add(1);
-                            enemySpawnableTiles.Add(new Rectangle(j*tileWidth,i*tileHeight,tileWidth,tileHeight));
-                        }
-                        else
-                        {
-                            // Walls
-                            thisRow.Add(-1);
-                        }
+                        enemySpawnableTiles.Add(new Rectangle(j*tileWidth,i*tileHeight,tileWidth,tileHeight));
                     }
-                    else
+                    else if (line[j] == "1")
                     {
-                        thisRow.Add(0);
+                        collisionTiles.Add(new Rectangle(j*tileWidth,i*tileHeight,tileWidth,tileHeight));
                     }
                 }
                 tileMap.Add(thisRow);
@@ -71,7 +75,11 @@ namespace MyGame.World
 
         internal override void Load(ContentManager content)
         {
-            mapTexture = content.Load<Texture2D>("gameSheet");
+
+            CreateTileMap();
+
+
+            texture = content.Load<Texture2D>("gameSheet");
             mapHeight = numRows*tileHeight;
             mapWidth = numColumns*tileWidth;
 
@@ -82,7 +90,6 @@ namespace MyGame.World
                 tilesTextureRectangle.Add(new Rectangle(tileWidth*temp,0,tileWidth,tileHeight));
             }
 
-            CreateTileMap();
 
         }
         
@@ -97,14 +104,14 @@ namespace MyGame.World
             {
                 for(int j = 0; j < numColumns; j++)
                 {
-                    spriteBatch.Draw(mapTexture,new Rectangle(widthOffset+tileWidth*j,heightOffset+tileHeight*i,tileWidth,tileHeight),tilesTextureRectangle[textureMap[i][j]],Color.White);
-                    if (tileMap[i][j] == -1)
+                    spriteBatch.Draw(texture,new Rectangle(widthOffset+tileWidth*j,heightOffset+tileHeight*i,tileWidth,tileHeight),tilesTextureRectangle[textureMap[i][j]],Color.White);
+                    if (tileMap[i][j] == 1)
                     {
-                        spriteBatch.Draw(mapTexture,new Rectangle(widthOffset+tileWidth*j,heightOffset+tileHeight*i,tileWidth,tileHeight),borderTextureRectangle,Color.White);
+                        spriteBatch.Draw(texture,new Rectangle(widthOffset+tileWidth*j,heightOffset+tileHeight*i,tileWidth,tileHeight),borderTextureRectangle,Color.White);
                     }
-                    else if (tileMap[i][j]== 1)
+                    else if (tileMap[i][j]== 2)
                     {
-                        spriteBatch.Draw(mapTexture,new Rectangle(widthOffset+tileWidth*j,heightOffset+tileHeight*i,tileWidth,tileHeight),enemySpawnTextureRectangle,Color.White);
+                        spriteBatch.Draw(texture,new Rectangle(widthOffset+tileWidth*j,heightOffset+tileHeight*i,tileWidth,tileHeight),enemySpawnTextureRectangle,Color.White);
                     }
                 }
             }

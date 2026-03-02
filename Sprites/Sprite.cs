@@ -61,7 +61,7 @@ namespace MyGame.Sprites
             origin = new Vector2(position.X+width/2,position.Y+height/2);
         }
 
-        protected bool CheckCollision(Vector2 newPosition)
+        public bool CheckCollision(Vector2 newPosition)
         {
             // Check boundary condition
             if (newPosition.X < 0 || newPosition.Y < 0 || newPosition.X+width > map.mapWidth || newPosition.Y+height > map.mapHeight)
@@ -69,16 +69,14 @@ namespace MyGame.Sprites
                 return true;
             }
 
+            Rectangle newBoundingRectangle = new Rectangle((int)newPosition.X,(int)newPosition.Y,width,height);
+
             // Check tilemap 
-            // Theres a O<1> way to do this
-            for (int i = 0; i < map.numRows; ++i)
+            // Theres a O<1> way to do this While doing also set it so different htings can collide
+            for (int i = 0; i<map.collisionTiles.Count; i++)
             {
-                for(int j = 0; j<map.numColumns; ++j)
-                {
-                    if (map.tileMap[i][j] == -1 && new Rectangle(j*map.tileWidth,i*map.tileHeight,map.tileWidth,map.tileHeight).Intersects(new Rectangle((int)newPosition.X,(int)newPosition.Y,width,height)))
-                    {
-                        return true;
-                    }
+                if (map.collisionTiles[i].Intersects(newBoundingRectangle)){
+                    return true;
                 }
             }
 

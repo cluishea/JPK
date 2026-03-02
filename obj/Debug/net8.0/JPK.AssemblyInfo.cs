@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JPK")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8e6cebeec15cda7643ae63c81423217afb5fe68")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad7ac4019c51a7003a774d8eb3baf4a7b9aa724f")]
 [assembly: System.Reflection.AssemblyProductAttribute("JPK")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JPK")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
