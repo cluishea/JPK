@@ -10,8 +10,7 @@ namespace MyGame.Sprites
 {
     
     class Slime : Enemy
-    {
-        Player player;
+    { 
         int MAX_VELOCITY = 4;
         int JUMP_WAIT_TIMER = 60;
         int JUMP_TIMER = 30;
@@ -92,11 +91,7 @@ namespace MyGame.Sprites
                     currentActionTimer = 0;
                     speed = MAX_VELOCITY;
 
-                    direction = new Vector2(player.Origin.X - position.X, player.Origin.Y - position.Y);
-                    if (direction != Vector2.Zero)
-                    {
-                        direction.Normalize();
-                    }
+                    direction = GetDirection();
                     velocity = direction*speed;
 
                     currentAnimation = jumpingAnimation;

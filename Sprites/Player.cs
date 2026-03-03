@@ -20,8 +20,6 @@ namespace MyGame.Sprites
         ProjectileManager projectileManager;
         Vector2 defaultStartPosition = new Vector2(8*32,8*32);
 
-        int MAX_VELOCITY = 2;
-
         // Offsets while drawing
         int heightOffset = 120;
         int widthOffset = 400;
@@ -43,6 +41,27 @@ namespace MyGame.Sprites
         Animation currentAnimation;
         Animation idleAnimation;
         Animation shootingAnimation;
+
+        int lineOfSightDistance = 100; // Performance issues
+        public List<Rectangle> rectanglesWithLineOfSight = new List<Rectangle>();
+
+
+        void UpdateLineOfSight()
+        {
+            rectanglesWithLineOfSight = new List<Rectangle>();
+            foreach (Rectangle rectangle in map.emptyTiles)
+            {
+                Vector2 tileOrigin = new Vector2(rectangle.X+map.tileWidth/2,rectangle.Y+map.tileHeight/2);
+                RayCast ray = new RayCast(Origin,tileOrigin);
+                if(ray.distance < lineOfSightDistance){
+                    if(!ray.RayCastCheck(map.collisionTiles))
+                    {
+                        rectanglesWithLineOfSight.Add(rectangle);
+                    }
+                }
+            }
+        }
+
 
         public void Die()
         {
@@ -81,6 +100,7 @@ namespace MyGame.Sprites
             
             shootTimer = DEFAULT_SHOOT_TIMER;
             timeSinceLastShoot = 0;
+            speed = 2;
 
 
             idleAnimation = new Animation("Idle",IDLE_ANIMATION_FRAMES,60,false);
@@ -188,10 +208,9 @@ namespace MyGame.Sprites
                 velocity.X = 1f; 
             }
 
-            // Normalize velocity
             if (velocity!= Vector2.Zero){
                 velocity.Normalize();
-                velocity*=MAX_VELOCITY;
+                velocity*=speed;
                 isIdle = false;
             }
             else
@@ -232,6 +251,8 @@ namespace MyGame.Sprites
             UpdateAnimation();
            
             UpdateBoundingRectangle();
+
+            UpdateLineOfSight();
         }
 
         internal override void Draw(SpriteBatch spriteBatch)

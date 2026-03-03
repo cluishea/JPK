@@ -9,4 +9,9 @@ To do :
 
 - Make enemy drop stuff
 
-- Make enemy pathfinding good
+- Make enemy pathfinding good 
+
+
+
+The enemy is behaving weird because raycast is from origin, I might need to raycast from corners and the origin instead.
+I did movement axis independent which makes slime jumping quirky.

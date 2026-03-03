@@ -51,11 +51,13 @@ namespace MyGame.Managers
             {
                 timeSinceLastSpawn = 0;
                 int numSpawn = 1;
-                Rectangle spawnRectangle = map.enemySpawnableTiles[Randomizer.RandomInteger(map.enemySpawnableTiles.Count)];
+                int spawnTileIndex;
+                spawnTileIndex = Randomizer.RandomInteger(map.enemySpawnableTiles.Count);
+                Rectangle spawnRectangle = map.enemySpawnableTiles[spawnTileIndex];
                 int numberSpawned = 0;
                 do
                 {
-                    Slime slime = new Slime(Randomizer.RandomPoint(spawnRectangle),player,map);
+                    Slime slime = new Slime(new Vector2(spawnRectangle.X,spawnRectangle.Y),player,map);
                     slime.Load(content);
                     if (!slime.CheckCollision(slime.Position))
                     {

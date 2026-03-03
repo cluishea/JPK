@@ -85,7 +85,14 @@ namespace MyGame.Sprites
 
         protected void Move()
         {
-            Vector2 newPosition = new Vector2(position.X+velocity.X, position.Y+velocity.Y);
+            Vector2 newPosition = new Vector2(position.X+velocity.X, position.Y);
+
+            if (!CheckCollision(newPosition))
+            {
+                position = newPosition;
+            }
+
+            newPosition = new Vector2(position.X, position.Y+velocity.Y);
 
             if (!CheckCollision(newPosition))
             {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -37,6 +38,7 @@ namespace MyGame.World
 
         public List <Rectangle> enemySpawnableTiles = new List<Rectangle>();
         public List <Rectangle> collisionTiles = new List<Rectangle>();
+        public List <Rectangle> emptyTiles = new List<Rectangle>();
 
         string filePath = "World/Map.txt";
 
@@ -67,6 +69,11 @@ namespace MyGame.World
                     {
                         collisionTiles.Add(new Rectangle(j*tileWidth,i*tileHeight,tileWidth,tileHeight));
                     }
+                    else
+                    {
+                        emptyTiles.Add(new Rectangle(j*tileWidth,i*tileHeight,tileWidth,tileHeight));
+                    }
+                        
                 }
                 tileMap.Add(thisRow);
                 textureMap.Add(thisRowTexture);
