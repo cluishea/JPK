@@ -19,6 +19,7 @@ namespace MyGame.Scenes
         private ProjectileManager projectileManager;
         private Player player;
         private EnemyManager enemyManager;
+        private DropsManager dropsManager;
 
         private void HandleKills()
         {
@@ -31,7 +32,8 @@ namespace MyGame.Scenes
                         projectile.isAlive = false;
                         enemy.DropHealth(1);
                         gameManager.AddScore(enemy.pointsOnDefeat);
-                        break;
+                        dropsManager.HandleMobDrop(enemy);
+                        break;                        
                     }
                 }
             }
@@ -44,6 +46,7 @@ namespace MyGame.Scenes
                     gameManager.RemoveLife();
                     projectileManager.RemoveAll();
                     enemyManager.RemoveAll();
+                    dropsManager.RemoveAll();
                     break;
                 }
             }
@@ -67,6 +70,9 @@ namespace MyGame.Scenes
 
             enemyManager = new EnemyManager(player,map);
             enemyManager.Load(content);
+
+            dropsManager = new DropsManager();
+            dropsManager.Load(content);
         }
 
         internal override void Update(GameTime gameTime)
@@ -77,6 +83,7 @@ namespace MyGame.Scenes
             projectileManager.Update(gameTime);
             gameManager.Update(gameTime);    
             enemyManager.Update(gameTime);
+            dropsManager.Update(gameTime);
 
             HandleKills();
 
@@ -89,12 +96,13 @@ namespace MyGame.Scenes
 
         internal override void Draw(SpriteBatch spriteBatch)
         {
-            
+            gameManager.Draw(spriteBatch);
             map.Draw(spriteBatch);
             projectileManager.Draw(spriteBatch);
-            player.Draw(spriteBatch);
-            gameManager.Draw(spriteBatch);
+            dropsManager.Draw(spriteBatch);
             enemyManager.Draw(spriteBatch);
+            player.Draw(spriteBatch);
+
         }
     }
 
